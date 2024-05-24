@@ -55,10 +55,20 @@ func handleResponse(text string, answer string) string{
 	return "Correct"
 }
 
+func readFlags() {
+	// a function to read flags and apply them
+	// timer length, shuffle problems
+}
+
+
+
 func main() {
 	problems := getProblems()
 
 	score := 0
+	// add a timer
+	// score based on correct * remaining time
+
 
 	for _, problem := range problems {
 		score = serveProblem(problem, score)
