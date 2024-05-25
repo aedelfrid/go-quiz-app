@@ -7,6 +7,7 @@ import (
 	"os"
 	"bufio"
 	"strings"
+	"time"
 )
 
 func getProblems() (data [][]string) {
@@ -68,7 +69,27 @@ func main() {
 	score := 0
 	// add a timer
 	// score based on correct * remaining time
+	ticker := time.NewTicker(1 * time.Second)
+	done := make(chan bool)
 
+	go func() {
+		timerLen := 10
+        for {
+            select {
+            case <-done:
+				os.Exit(1)
+				return
+            case <-ticker.C:
+				timerLen--
+
+				if timerLen == 0 {
+					fmt.Println("Time's up")
+					done <- true
+				}
+                fmt.Printf("time remaining: %d\n", timerLen)
+            }
+        }
+    }()
 
 	for _, problem := range problems {
 		score = serveProblem(problem, score)
